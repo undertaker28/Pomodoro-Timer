@@ -14,6 +14,7 @@ struct Home: View {
             Text("Pomodoro Timer")
                 .font(.title2.bold())
                 .foregroundColor(.white)
+            
             GeometryReader { proxy in
                 VStack(spacing: 15) {
                     // MARK: Timer ring
@@ -70,7 +71,7 @@ struct Home: View {
                             
                         }
                         else {
-                            pomodoroModel.isStarted = true
+                            pomodoroModel.addNewTimer = true
                         }
                     } label: {
                         Image(systemName: !pomodoroModel.isStarted ? "timer" : "pause")
@@ -92,6 +93,23 @@ struct Home: View {
             Color(uiColor: .purple)
                 .ignoresSafeArea()
         }
+        .overlay(content: {
+            ZStack {
+                Color.black
+                    .opacity(pomodoroModel.addNewTimer ? 0.25 : 0)
+                    .onTapGesture {
+                        pomodoroModel.hour = 0
+                        pomodoroModel.minutes = 0
+                        pomodoroModel.seconds = 0
+                        pomodoroModel.addNewTimer = false
+                    }
+                
+                NewTimerView()
+                    .frame(maxHeight: .infinity, alignment: .bottom)
+                    .offset(y: pomodoroModel.addNewTimer ? 0 : 400)
+            }
+            .animation(.easeInOut, value: pomodoroModel.addNewTimer)
+        })
         .preferredColorScheme(.dark)
     }
     
@@ -99,9 +117,97 @@ struct Home: View {
     @ViewBuilder
     func NewTimerView()->some View {
         VStack(spacing: 15) {
+            Text("Add New Timer")
+                .font(.title2.bold())
+                .foregroundColor(.white)
+                .padding(.top, 10)
             
+            HStack(spacing: 15) {
+                Text("\(pomodoroModel.hour) hr")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white.opacity(0.3))
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 12)
+                    .background {
+                        Capsule()
+                            .fill(.white.opacity(0.07))
+                    }
+                    .contextMenu {
+                        ContextMenuOptions(maxVlaue: 12, hint: "hr") { value in
+                            pomodoroModel.hour = value
+                        }
+                    }
+                
+                Text("\(pomodoroModel.minutes) min")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white.opacity(0.3))
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 12)
+                    .background {
+                        Capsule()
+                            .fill(.white.opacity(0.07))
+                    }
+                    .contextMenu {
+                        ContextMenuOptions(maxVlaue: 60, hint: "min") { value in
+                            pomodoroModel.minutes = value
+                        }
+                    }
+                
+                Text("\(pomodoroModel.seconds) sec")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white.opacity(0.3))
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 12)
+                    .background {
+                        Capsule()
+                            .fill(.white.opacity(0.07))
+                    }
+                    .contextMenu {
+                        ContextMenuOptions(maxVlaue: 60, hint: "sec") { value in
+                            pomodoroModel.seconds = value
+                        }
+                    }
+            }
+            .padding(.top, 20)
+            
+            Button {
+                
+            } label: {
+                Text("Save")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
+                    .padding(.vertical)
+                    .padding(.horizontal, 100)
+                    .background {
+                        Capsule()
+                            .fill(Color(uiColor: .magenta))
+                    }
+            }
+            .disabled(pomodoroModel.seconds == 0)
+            .opacity(pomodoroModel.seconds == 0 ? 0.5 : 1)
+            .padding(.top)
         }
         .padding()
+        .frame(maxWidth: .infinity)
+        .background {
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Color(uiColor: .purple))
+                .ignoresSafeArea()
+        }
+    }
+    
+    // MARK: Reusable context menu options
+    @ViewBuilder
+    func ContextMenuOptions(maxVlaue: Int, hint: String, onClick: @escaping (Int)->())->some View {
+        ForEach(0...maxVlaue, id: \.self) { value in
+            Button("\(value) \(hint)") {
+                onClick(value)
+            }
+        }
     }
 }
 
