@@ -11,7 +11,7 @@ struct Home: View {
     @EnvironmentObject var pomodoroModel: PomodoroModel
     var body: some View {
         VStack {
-            Text("Pomodoro Timer")
+            Text("Pomodoro timer")
                 .font(.title2.bold())
                 .foregroundColor(.white)
             
@@ -57,7 +57,7 @@ struct Home: View {
                         
                         Text(pomodoroModel.timerStringValue)
                             .font(.system(size: 45, weight: .light))
-                            .rotationEffect(.init(degrees: -90))
+                            .rotationEffect(.init(degrees: 90))
                             .animation(.none, value: pomodoroModel.progress)
                     }
                     .padding(60)
@@ -68,13 +68,15 @@ struct Home: View {
                     
                     Button {
                         if pomodoroModel.isStarted {
-                            
+                            pomodoroModel.stopTimer()
+                            // MARK: Cancelling all notifications
+                            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
                         }
                         else {
                             pomodoroModel.addNewTimer = true
                         }
                     } label: {
-                        Image(systemName: !pomodoroModel.isStarted ? "timer" : "pause")
+                        Image(systemName: !pomodoroModel.isStarted ? "timer" : "stop.fill")
                             .font(.largeTitle.bold())
                             .foregroundColor(.white)
                             .frame(width: 80, height: 80)
@@ -98,9 +100,7 @@ struct Home: View {
                 Color.black
                     .opacity(pomodoroModel.addNewTimer ? 0.25 : 0)
                     .onTapGesture {
-                        pomodoroModel.hour = 0
-                        pomodoroModel.minutes = 0
-                        pomodoroModel.seconds = 0
+                        (pomodoroModel.hour, pomodoroModel.minutes, pomodoroModel.seconds) = (0, 0, 0)
                         pomodoroModel.addNewTimer = false
                     }
                 
@@ -111,13 +111,27 @@ struct Home: View {
             .animation(.easeInOut, value: pomodoroModel.addNewTimer)
         })
         .preferredColorScheme(.dark)
+        .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
+            if pomodoroModel.isStarted {
+                pomodoroModel.updateTimer()
+            }
+        }
+        .alert("It's all!", isPresented: $pomodoroModel.isFinished) {
+            Button("Start new", role: .cancel) {
+                pomodoroModel.stopTimer()
+                pomodoroModel.addNewTimer = true
+            }
+            Button("Close", role: .destructive) {
+                pomodoroModel.stopTimer()
+            }
+        }
     }
     
     // MARK: New timer bottom sheet
     @ViewBuilder
     func NewTimerView()->some View {
         VStack(spacing: 15) {
-            Text("Add New Timer")
+            Text("Add new timer")
                 .font(.title2.bold())
                 .foregroundColor(.white)
                 .padding(.top, 10)
@@ -174,7 +188,7 @@ struct Home: View {
             .padding(.top, 20)
             
             Button {
-                
+                pomodoroModel.startTimer()
             } label: {
                 Text("Save")
                     .font(.title3)
