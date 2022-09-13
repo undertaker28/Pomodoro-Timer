@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E93B0F8528B2848B00FD4B3A /* HTF theme.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E93B0F8428B2848B00FD4B3A /* HTF theme.mp3 */; };
 		E9B5C6A828B0F6F5009A9CA0 /* PomodoroTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B5C6A728B0F6F5009A9CA0 /* PomodoroTimerApp.swift */; };
 		E9B5C6AA28B0F6F5009A9CA0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B5C6A928B0F6F5009A9CA0 /* ContentView.swift */; };
 		E9B5C6AC28B0F6F6009A9CA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9B5C6AB28B0F6F6009A9CA0 /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E93B0F8428B2848B00FD4B3A /* HTF theme.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "HTF theme.mp3"; sourceTree = "<group>"; };
 		E9B5C6A428B0F6F5009A9CA0 /* Pomodoro Timer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pomodoro Timer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9B5C6A728B0F6F5009A9CA0 /* PomodoroTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroTimerApp.swift; sourceTree = "<group>"; };
 		E9B5C6A928B0F6F5009A9CA0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -55,6 +57,7 @@
 		E9B5C6A628B0F6F5009A9CA0 /* Pomodoro Timer */ = {
 			isa = PBXGroup;
 			children = (
+				E93B0F8428B2848B00FD4B3A /* HTF theme.mp3 */,
 				E9B5C6B628B0F71B009A9CA0 /* ViewModel */,
 				E9B5C6B528B0F713009A9CA0 /* View */,
 				E9B5C6A728B0F6F5009A9CA0 /* PomodoroTimerApp.swift */,
@@ -148,6 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9B5C6AF28B0F6F6009A9CA0 /* Preview Assets.xcassets in Resources */,
+				E93B0F8528B2848B00FD4B3A /* HTF theme.mp3 in Resources */,
 				E9B5C6AC28B0F6F6009A9CA0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

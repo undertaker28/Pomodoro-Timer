@@ -91,9 +91,7 @@ class PomodoroModel: NSObject, ObservableObject, UNUserNotificationCenterDelegat
         let content = UNMutableNotificationContent()
         content.title = "Pomodoro timer"
         content.subtitle = "It's all!"
-        
-        // MARK: Change default sound to "Happy Tree Friends"
-        content.sound = UNNotificationSound.default
+        content.sound = UNNotificationSound(named: UNNotificationSoundName("HTF theme.mp3"))
         
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(staticTotalSeconds), repeats: false))
         
