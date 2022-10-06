@@ -1,4 +1,4 @@
-# Pomodoro Timer
+# Timer
 A simple application that ensures you stay focused and productive, by displaying a small stopwatch on your screen to monitor the amount of time spent on an app.
 ## Features:
 - Run background
@@ -8,25 +8,25 @@ A simple application that ensures you stay focused and productive, by displaying
 - Notification of the end of the timer
 ## Application icon view
 <p align="center"> 
-<img src="https://user-images.githubusercontent.com/69767713/190515985-b9ff6921-d314-4567-bcda-4a3e1677b379.jpeg">
+<img src="https://user-images.githubusercontent.com/69767713/194421753-6f9c176b-55e2-4aff-a7e1-d068fb05c4d0.jpeg">
 </p>
 
 ## Home view
 <p align="center"> 
-<img src="https://user-images.githubusercontent.com/69767713/190516518-9b617e5c-f707-46ad-bbfa-2b8be6095f30.PNG" width="390" height="844">
+<img src="https://user-images.githubusercontent.com/69767713/194421861-e1444016-cb85-4607-8a75-831f9b447803.PNG" width="390" height="844">
 </p>
 
 ## Picker sheet
 <p align="center"> 
-<img src="https://user-images.githubusercontent.com/69767713/190516610-a99a59bf-34c8-433d-a920-2553473110ed.PNG" width="390" height="844">
+<img src="https://user-images.githubusercontent.com/69767713/194421919-d2fa4e48-5223-4b66-8f5c-566d0efee3f6.PNG" width="390" height="844">
 </p>
 
 ## Active timer
 <p align="center"> 
-<img src="https://user-images.githubusercontent.com/69767713/190516995-b500ef8d-97ad-4a69-a2f5-8e9fc887cd8a.PNG" width="390" height="844">
+<img src="https://user-images.githubusercontent.com/69767713/194421954-70dea9f6-d84e-4d21-ab57-a7b25bbe643f.PNG" width="390" height="844">
 </p>
 
 ## Notification
 <p align="center"> 
-<img src="https://user-images.githubusercontent.com/69767713/190517048-34ebc279-9089-4cd1-82b8-8503cb8b8c4d.PNG" width="390" height="844">
+<img src="https://user-images.githubusercontent.com/69767713/194421989-ada25b74-8ec9-42ff-b0db-58c0e99a2018.PNG" width="390" height="844">
 </p>
