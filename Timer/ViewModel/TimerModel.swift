@@ -1,13 +1,13 @@
 //
-//  PomodoroModel.swift
-//  Pomodoro Timer
+//  TimerModel.swift
+//  Timer
 //
 //  Created by Pavel on 20.08.22.
 //
 
 import SwiftUI
 
-class PomodoroModel: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
+class TimerModel: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
     // MARK: Timer properties
     @Published var progress: CGFloat = 1
     @Published var timerStringValue: String = "00:00"
@@ -89,7 +89,7 @@ class PomodoroModel: NSObject, ObservableObject, UNUserNotificationCenterDelegat
     // MARK: Adding notification
     func addNotification() {
         let content = UNMutableNotificationContent()
-        content.title = "Pomodoro timer"
+        content.title = "Timer"
         content.subtitle = "It's all!"
         content.sound = UNNotificationSound(named: UNNotificationSoundName("HTF theme.mp3"))
         

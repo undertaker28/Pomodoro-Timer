@@ -1,6 +1,6 @@
 //
 //  Home.swift
-//  Pomodoro Timer
+//  Timer
 //
 //  Created by Pavel on 20.08.22.
 //
@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct Home: View {
-    @EnvironmentObject var pomodoroModel: PomodoroModel
+    @EnvironmentObject var timerModel: TimerModel
     var body: some View {
         VStack {
-            Text("Pomodoro timer")
+            Text("Timer")
                 .font(.title2.bold())
                 .foregroundColor(.white)
             
@@ -24,7 +24,7 @@ struct Home: View {
                             .padding(-40)
                         
                         Circle()
-                            .trim(from: 0, to: pomodoroModel.progress)
+                            .trim(from: 0, to: timerModel.progress)
                             .stroke(.white.opacity(0.03), lineWidth: 80)
                         
                         // MARK: Shadow
@@ -36,7 +36,7 @@ struct Home: View {
                         Circle()
                             .fill(Color(uiColor: .purple))
                         Circle()
-                            .trim(from: 0, to: pomodoroModel.progress)
+                            .trim(from: 0, to: timerModel.progress)
                             .stroke(Color(uiColor: .magenta).opacity(0.7), lineWidth: 10)
                         // MARK: Knob
                         GeometryReader { proxy in
@@ -52,31 +52,31 @@ struct Home: View {
                                 })
                                 .frame(width: size.width, height: size.height, alignment: .center)
                                 .offset(x: size.height / 2)
-                                .rotationEffect(.init(degrees: pomodoroModel.progress * 360))
+                                .rotationEffect(.init(degrees: timerModel.progress * 360))
                         }
                         
-                        Text(pomodoroModel.timerStringValue)
+                        Text(timerModel.timerStringValue)
                             .font(.system(size: 45, weight: .light))
                             .rotationEffect(.init(degrees: 90))
-                            .animation(.none, value: pomodoroModel.progress)
+                            .animation(.none, value: timerModel.progress)
                     }
                     .padding(60)
                     .frame(height: proxy.size.width)
                     .rotationEffect(.init(degrees: -90))
-                    .animation(.easeInOut, value: pomodoroModel.progress)
+                    .animation(.easeInOut, value: timerModel.progress)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     
                     Button {
-                        if pomodoroModel.isStarted {
-                            pomodoroModel.stopTimer()
+                        if timerModel.isStarted {
+                            timerModel.stopTimer()
                             // MARK: Cancelling all notifications
                             UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
                         }
                         else {
-                            pomodoroModel.addNewTimer = true
+                            timerModel.addNewTimer = true
                         }
                     } label: {
-                        Image(systemName: !pomodoroModel.isStarted ? "timer" : "stop.fill")
+                        Image(systemName: !timerModel.isStarted ? "timer" : "stop.fill")
                             .font(.largeTitle.bold())
                             .foregroundColor(.white)
                             .frame(width: 80, height: 80)
@@ -98,31 +98,31 @@ struct Home: View {
         .overlay(content: {
             ZStack {
                 Color.black
-                    .opacity(pomodoroModel.addNewTimer ? 0.25 : 0)
+                    .opacity(timerModel.addNewTimer ? 0.25 : 0)
                     .onTapGesture {
-                        (pomodoroModel.hour, pomodoroModel.minutes, pomodoroModel.seconds) = (0, 0, 0)
-                        pomodoroModel.addNewTimer = false
+                        (timerModel.hour, timerModel.minutes, timerModel.seconds) = (0, 0, 0)
+                        timerModel.addNewTimer = false
                     }
                 
                 NewTimerView()
                     .frame(maxHeight: .infinity, alignment: .bottom)
-                    .offset(y: pomodoroModel.addNewTimer ? 0 : 400)
+                    .offset(y: timerModel.addNewTimer ? 0 : 400)
             }
-            .animation(.easeInOut, value: pomodoroModel.addNewTimer)
+            .animation(.easeInOut, value: timerModel.addNewTimer)
         })
         .preferredColorScheme(.dark)
         .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
-            if pomodoroModel.isStarted {
-                pomodoroModel.updateTimer()
+            if timerModel.isStarted {
+                timerModel.updateTimer()
             }
         }
-        .alert("It's all!", isPresented: $pomodoroModel.isFinished) {
+        .alert("It's all!", isPresented: $timerModel.isFinished) {
             Button("Start new", role: .cancel) {
-                pomodoroModel.stopTimer()
-                pomodoroModel.addNewTimer = true
+                timerModel.stopTimer()
+                timerModel.addNewTimer = true
             }
             Button("Close", role: .destructive) {
-                pomodoroModel.stopTimer()
+                timerModel.stopTimer()
             }
         }
     }
@@ -137,7 +137,7 @@ struct Home: View {
                 .padding(.top, 10)
             
             HStack(spacing: 15) {
-                Text("\(pomodoroModel.hour) hr")
+                Text("\(timerModel.hour) hr")
                     .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundColor(.white.opacity(0.3))
@@ -149,11 +149,11 @@ struct Home: View {
                     }
                     .contextMenu {
                         ContextMenuOptions(maxVlaue: 12, hint: "hr") { value in
-                            pomodoroModel.hour = value
+                            timerModel.hour = value
                         }
                     }
                 
-                Text("\(pomodoroModel.minutes) min")
+                Text("\(timerModel.minutes) min")
                     .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundColor(.white.opacity(0.3))
@@ -165,11 +165,11 @@ struct Home: View {
                     }
                     .contextMenu {
                         ContextMenuOptions(maxVlaue: 60, hint: "min") { value in
-                            pomodoroModel.minutes = value
+                            timerModel.minutes = value
                         }
                     }
                 
-                Text("\(pomodoroModel.seconds) sec")
+                Text("\(timerModel.seconds) sec")
                     .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundColor(.white.opacity(0.3))
@@ -181,14 +181,14 @@ struct Home: View {
                     }
                     .contextMenu {
                         ContextMenuOptions(maxVlaue: 60, hint: "sec") { value in
-                            pomodoroModel.seconds = value
+                            timerModel.seconds = value
                         }
                     }
             }
             .padding(.top, 20)
             
             Button {
-                pomodoroModel.startTimer()
+                timerModel.startTimer()
             } label: {
                 Text("Save")
                     .font(.title3)
@@ -201,8 +201,8 @@ struct Home: View {
                             .fill(Color(uiColor: .magenta))
                     }
             }
-            .disabled(pomodoroModel.seconds == 0)
-            .opacity(pomodoroModel.seconds == 0 ? 0.5 : 1)
+            .disabled(timerModel.seconds == 0)
+            .opacity(timerModel.seconds == 0 ? 0.5 : 1)
             .padding(.top)
         }
         .padding()
@@ -228,6 +228,6 @@ struct Home: View {
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environmentObject(PomodoroModel())
+            .environmentObject(TimerModel())
     }
 }

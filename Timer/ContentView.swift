@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  Pomodoro Timer
+//  Timer
 //
 //  Created by Pavel on 20.08.22.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var pomodoroModel: PomodoroModel
+    @EnvironmentObject var pomodoroModel: TimerModel
     var body: some View {
         Home()
             .environmentObject(pomodoroModel)
